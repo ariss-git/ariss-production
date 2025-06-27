@@ -20,6 +20,7 @@ model Admin {
   profile_picture String?
   role            String?
   createdAt       DateTime @default(now())
+  isApproved      Boolean  @default(false)
 
   notifications Notification[]
 }
@@ -30,6 +31,6 @@ model Notification {
   description String
   createdAt   DateTime @default(now())
 
-  admin   Admin?  @relation(fields: [adminId], references: [id])
+  admin   Admin?  @relation(fields: [adminId], references: [id], onDelete: Cascade)
   adminId String?
 }
