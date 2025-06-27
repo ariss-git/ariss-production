@@ -69,22 +69,14 @@ export const updateAdminProfilePicture = async (
   id: string,
   profile_picture: string
 ) => {
-  const existingAdmin = await prisma.admin.update({
+  return await prisma.admin.update({
     where: {
       id,
-      role: "admin",
-      isApproved: true,
     },
     data: {
       profile_picture,
     },
   });
-
-  if (!existingAdmin) {
-    throw new Error("Admin user does not exist");
-  }
-
-  return existingAdmin;
 };
 
 /**
@@ -93,9 +85,12 @@ export const updateAdminProfilePicture = async (
  * @returns The deleted admin user record
  */
 export const deleteAdmin = async (id: string) => {
-  return await prisma.admin.delete({
+  return await prisma.admin.update({
     where: {
       id,
+    },
+    data: {
+      isApproved: false,
     },
   });
 };
