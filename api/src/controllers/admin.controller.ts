@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 import * as adminServices from "../services/admin.service";
 
+/**
+ * @description Handles the creation of a new admin.
+ * @route POST /admin
+ * @access Private (based on implementation)
+ */
 export const createAdmin = async (req: Request, res: Response) => {
   const { name, email, profile_picture, role } = req.body;
 
@@ -18,6 +23,11 @@ export const createAdmin = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @description Retrieves all admin users.
+ * @route GET /admin
+ * @access Private
+ */
 export const getAllAdmin = async (_req: Request, res: Response) => {
   try {
     const admins = await adminServices.getAllAdmin();
@@ -27,6 +37,11 @@ export const getAllAdmin = async (_req: Request, res: Response) => {
   }
 };
 
+/**
+ * @description Retrieves a single admin by ID.
+ * @route GET /admin/:id
+ * @access Private
+ */
 export const getSingleAdmin = async (req: Request, res: Response) => {
   const { id } = req.params;
 
@@ -42,12 +57,16 @@ export const getSingleAdmin = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @description Updates the profile picture of a specific admin.
+ * @route PUT /admin/:id/profile-picture
+ * @access Private
+ */
 export const updateAdminProfilePicture = async (
   req: Request,
   res: Response
 ) => {
   const { id } = req.params;
-
   const { profile_picture } = req.body;
 
   if (!id) {
@@ -65,6 +84,11 @@ export const updateAdminProfilePicture = async (
   }
 };
 
+/**
+ * @description Deletes an admin by ID.
+ * @route DELETE /admin/:id
+ * @access Private
+ */
 export const deleteAdmin = async (req: Request, res: Response) => {
   const { id } = req.params;
 
