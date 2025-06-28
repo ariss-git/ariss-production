@@ -23,6 +23,9 @@ model Admin {
   isApproved      Boolean  @default(false)
 
   notifications Notification[]
+  categories    Category[]
+  subcategories Subcategory[]
+  products      Product[]
 }
 
 model Notification {
@@ -31,6 +34,54 @@ model Notification {
   description String
   createdAt   DateTime @default(now())
 
-  admin   Admin?  @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  admin   Admin?  @relation(fields: [adminId], references: [id])
+  adminId String?
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  image       String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  admin   Admin?  @relation(fields: [adminId], references: [id])
+  adminId String?
+
+  subcategories Subcategory[]
+}
+
+model Subcategory {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  image       String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String?
+
+  admin   Admin?  @relation(fields: [adminId], references: [id])
+  adminId String?
+
+  products Product[]
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  description Json?
+  image       String[]
+  price       Float
+  warranty    Int
+  quantity    Int
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+  subcategoryId String?
+
+  admin   Admin?  @relation(fields: [adminId], references: [id])
   adminId String?
 }

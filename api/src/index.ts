@@ -1,3 +1,8 @@
 import app from "./server";
+import config from "./config/env.config";
 
-app.listen(5000, () => console.log("Server running on PORT: 5000"));
+const PORT = config.PORT;
+
+app.listen(PORT, () =>
+  console.log(`Server running on: http://localhost:${PORT}`)
+);
